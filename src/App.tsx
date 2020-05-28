@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import * as React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import ItemPage from './pages/ItemPage';
+import SigninPage from './pages/SigninPage';
+import ItemLikePage from "./pages/ItemLikePage";
+
+interface AppProps {
+
+}
+
+const App: React.FC<AppProps> = () => {
+    React.useEffect(() => {
+        document.title = "스쇼"
+    }, [])
+    return(
+        <div>
+            <Router>
+                <Route exact path="/" component={SigninPage}></Route>
+                <Route exact path="/item" component={ItemPage}></Route>
+                <Route exact path="/item/like" component={ItemLikePage}></Route>
+            </Router>
+        </div>
+    )
 }
 
 export default App;
