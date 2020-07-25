@@ -56,6 +56,7 @@ function ItemPage() {
 
             .then(function (response: any) {
                 setProductList(response.data);
+                getNumOfLikeItems(sessionStorage.getItem("id"));
             })
 
             .catch(function (error) {
@@ -137,18 +138,18 @@ function ItemPage() {
                 {sessionStorage.getItem('name') && <Col offset={2}><h4>{sessionStorage.getItem('name')}님 안녕하세요</h4></Col>}
             </Row>
             <Row>
-                {numOfLikeItems && <Col offset={2}><h4>좋아요 한 상품 수 : {numOfLikeItems}개</h4></Col>}
+                {numOfLikeItems > 0 && <Col offset={2}><h4>좋아요 한 상품 수 : {numOfLikeItems}개</h4></Col>}
             </Row>
             <Row>
                 <Col offset={7} span={4}>
                     <Button onClick={()=>{
                         saveLogs()
-                    }}style={{height : "50px", color : "black", fontSize : "15px"}}>다음</Button>
+                    }}style={{height : "50px", color : "black", fontSize : "12px"}}>다음</Button>
                 </Col>
                 <Col offset={2} span={4}>
                     <Button onClick={()=>{
                         history.push("/item/like");
-                    }}style={{height : "50px", color : "black", fontSize : "15px"}}>좋아요 한 상품 보기</Button>
+                    }}style={{height : "50px", color : "black", fontSize : "12px"}}>좋아요 한 상품 보기</Button>
                 </Col>
             </Row>
 
@@ -193,17 +194,17 @@ function ItemPage() {
                         <div style={{marginTop : "20px"}}>
                             <Row>
                                 <Col offset={0} span={24}>
-                                    <h4>{p.title}</h4>
+                                    <h4 style={{fontSize: "12px"}}>{p.title}</h4>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col offset={0} span={24}>
-                                    <h4>{p.mallNm}</h4>
+                                    <h4 style={{fontSize: "12px"}}>{p.mallNm}</h4>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col offset={0} span={24}>
-                                    <h4>{new Intl.NumberFormat().format(p.price)}원</h4>
+                                    <h4 style={{fontSize: "12px"}}>{new Intl.NumberFormat().format(p.price)}원</h4>
                                 </Col>
                             </Row>
                         </div>

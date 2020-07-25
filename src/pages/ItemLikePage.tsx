@@ -56,7 +56,7 @@ function ItemLikePage() {
                 <Col offset={10} span={4}>
                     <Button onClick={()=>{
                         history.push("/item");
-                    }}style={{height : "50px", color : "black", fontSize : "15px"}}>상품 페이지로 돌아가기</Button>
+                    }}style={{height : "50px", color : "black", fontSize : "12px"}}>상품 페이지로 돌아가기</Button>
                 </Col>
             </Row>
             <GridLayout
@@ -87,17 +87,17 @@ function ItemLikePage() {
                         <div style={{marginTop : "20px"}}>
                             <Row>
                                 <Col offset={0} span={24}>
-                                    <h4>{p.title}</h4>
+                                    <h4 style={{fontSize: "12px"}}>{p.title}</h4>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col offset={0} span={24}>
-                                    <h4>{p.mallNm}</h4>
+                                    <h4 style={{fontSize: "12px"}}>{p.mallNm}</h4>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col offset={0} span={24}>
-                                    <h4>{new Intl.NumberFormat().format(p.price)}원</h4>
+                                    <h4 style={{fontSize: "12px"}}>{new Intl.NumberFormat().format(p.price)}원</h4>
                                 </Col>
                             </Row>
                         </div>
