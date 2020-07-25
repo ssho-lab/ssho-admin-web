@@ -125,11 +125,11 @@ function ItemPage() {
                 item.like = !item.like;
             }
         });
-
         setProductList(temp);
     }
+
     return (
-        <div style={{paddingTop: "50px"}}>
+        <div style={{paddingTop: "50px", paddingBottom: "50px"}}>
             <Row>
                 <Col offset={2}><h1>스쇼 테스트 페이지</h1></Col>
             </Row>
@@ -143,12 +143,12 @@ function ItemPage() {
                 <Col offset={7} span={4}>
                     <Button onClick={()=>{
                         saveLogs()
-                    }}style={{height : "50px", color : "black", fontSize : "20px"}}>다음</Button>
+                    }}style={{height : "50px", color : "black", fontSize : "15px"}}>다음</Button>
                 </Col>
                 <Col offset={2} span={4}>
                     <Button onClick={()=>{
                         history.push("/item/like");
-                    }}style={{height : "50px", color : "black", fontSize : "20px"}}>좋아요 한 상품 보기</Button>
+                    }}style={{height : "50px", color : "black", fontSize : "15px"}}>좋아요 한 상품 보기</Button>
                 </Col>
             </Row>
 

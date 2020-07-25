@@ -56,7 +56,7 @@ function ItemLikePage() {
                 <Col offset={10} span={4}>
                     <Button onClick={()=>{
                         history.push("/item");
-                    }}style={{height : "50px", color : "black", fontSize : "20px"}}>상품 페이지로 돌아가기</Button>
+                    }}style={{height : "50px", color : "black", fontSize : "15px"}}>상품 페이지로 돌아가기</Button>
                 </Col>
             </Row>
             <GridLayout
