@@ -32,9 +32,7 @@ function ItemPage() {
         getAllProducts(sessionStorage.getItem("id"));
         getNumOfLikeItems(sessionStorage.getItem("id"));
 
-        const temp = swipeReq;
-        temp.startTime = moment().format("YYYY-MM-DD HH:mm:ss");
-        setSwipeReq(temp);
+        resetTime();
 
     }, []);
 
@@ -49,6 +47,14 @@ function ItemPage() {
             setInitial(false);
         }
     }, [productList])
+
+    const resetTime = () => {
+        const temp = swipeReq;
+
+        temp.startTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
+        setSwipeReq(temp);
+    }
 
     const getAllProducts = (userId : any) => {
 
@@ -84,14 +90,13 @@ function ItemPage() {
         productList.forEach((p : any) => {
 
             const swipe =
+
                 {
                     userId : "",
                     itemId : "",
                     score : 0,
                     swipeTime : null
                 }
-
-                console.log(p);
 
                 swipe.userId = userId;
                 swipe.itemId = p.id;
@@ -110,6 +115,7 @@ function ItemPage() {
                 setProductList([]);
                 getNumOfLikeItems(sessionStorage.getItem("id"));
                 getAllProducts(userId);
+                resetTime();
             })
 
             .catch(function (error) {
