@@ -18,7 +18,9 @@ function ItemPage() {
     const [productList, setProductList]: any[] = useState([]);
     const [swipeReq, setSwipeReq]: any = useState({startTime : null, swipeList : []});
     const [userId, setUserId]: any = useState<string>();
-    const [numOfLikeItems, setNumOfLikeItems]: any = useState<number>();
+
+    const [numOfSets, setNumOfSets]: any = useState<number>();
+    const [numOfLikes, setNumOfLikes]: any = useState<number>();
 
     const { history} = useReactRouter();
 
@@ -30,7 +32,7 @@ function ItemPage() {
             setUserId(sessionStorage.getItem('id'));
 
         getAllProducts(sessionStorage.getItem("id"));
-        getNumOfLikeItems(sessionStorage.getItem("id"));
+        getNumOfSetsAndNumOfLikes(sessionStorage.getItem("id"));
 
         resetTime();
 
@@ -65,7 +67,7 @@ function ItemPage() {
 
             .then(function (response: any) {
                 setProductList(response.data);
-                getNumOfLikeItems(sessionStorage.getItem("id"));
+                getNumOfSetsAndNumOfLikes(sessionStorage.getItem("id"));
             })
 
             .catch(function (error) {
@@ -73,11 +75,19 @@ function ItemPage() {
             });
     }
 
-    const getNumOfLikeItems = (userId : any) => {
+    const getNumOfSetsAndNumOfLikes = (userId : any) => {
         axios.get('http://13.124.59.2:8081/item/test/like?userId=' + userId)
 
             .then(function (response: any) {
-                setNumOfLikeItems(response.data.length);
+                setNumOfSets(response.data.length);
+
+                let likeSum = 0;
+
+                response.data.forEach((set:any)=>{
+                    likeSum += set.length;
+                })
+
+                setNumOfLikes(likeSum);
             })
 
             .catch(function (error) {
@@ -119,7 +129,7 @@ function ItemPage() {
 
             .then(function (response: any) {
                 setProductList([]);
-                getNumOfLikeItems(sessionStorage.getItem("id"));
+                getNumOfSetsAndNumOfLikes(sessionStorage.getItem("id"));
                 getAllProducts(userId);
                 resetSwipeReq();
                 resetTime();
@@ -151,7 +161,10 @@ function ItemPage() {
                 {sessionStorage.getItem('name') && <Col offset={2}><h4>{sessionStorage.getItem('name')}님 안녕하세요</h4></Col>}
             </Row>
             <Row>
-                {numOfLikeItems > 0 && <Col offset={2}><h4>좋아요 한 상품 수 : {numOfLikeItems}개</h4></Col>}
+                {numOfSets > 0 && <Col offset={2}><h4>진행한 세트 수 : {numOfSets}개</h4></Col>}
+            </Row>
+            <Row>
+                {numOfLikes > 0 && <Col offset={2}><h4>좋아요한 상품 수 : {numOfLikes}개</h4></Col>}
             </Row>
             <Row>
                 <Col offset={7} span={4}>
@@ -183,7 +196,6 @@ function ItemPage() {
                 }}>
 
                 {productList.length > 0 && productList.map((p: any, key: any) =>
-
                     <Col key={key} style={{cursor: "pointer", marginTop: "5vh"}} span={4}>
                         <div style={{textAlign: "right"}}>
                             <HeartOutlined
