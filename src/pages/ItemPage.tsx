@@ -56,8 +56,11 @@ function ItemPage() {
         setSwipeReq(temp);
     }
 
-    const getAllProducts = (userId : any) => {
+    const resetSwipeReq = ()=> {
+        setSwipeReq({startTime : null, swipeList : []})
+    }
 
+    const getAllProducts = (userId : any) => {
         axios.get('http://13.124.59.2:8081/item/test?userId=' + userId)
 
             .then(function (response: any) {
@@ -87,7 +90,7 @@ function ItemPage() {
         const temp  = swipeReq;
         const swipeList = temp.swipeList;
 
-        productList.forEach((p : any) => {
+        productList.forEach((p : any, key: number) => {
 
             const swipe =
 
@@ -95,12 +98,14 @@ function ItemPage() {
                     userId : "",
                     itemId : "",
                     score : 0,
-                    swipeTime : null
+                    cardSeq: 0,
+                    swipeTime: null
                 }
 
                 swipe.userId = userId;
                 swipe.itemId = p.id;
                 swipe.score = p.like ? 1 : 0
+                swipe.cardSeq = key;
                 swipe.swipeTime = swipeReq.startTime;
 
                 swipeList.push(swipe);
@@ -110,11 +115,13 @@ function ItemPage() {
         setSwipeReq(temp);
 
         axios.post('http://13.124.59.2:8082/log/swipe', swipeReq)
+        //axios.post('http://localhost:8082/log/swipe', swipeReq)
 
             .then(function (response: any) {
                 setProductList([]);
                 getNumOfLikeItems(sessionStorage.getItem("id"));
                 getAllProducts(userId);
+                resetSwipeReq();
                 resetTime();
             })
 
