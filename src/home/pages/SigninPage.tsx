@@ -4,12 +4,13 @@ import useReactRouter from 'use-react-router';
 import axios from 'axios';
 
 // @ts-ignore
-import {Form, Input, Button, Row, Col} from 'antd';
+import {Form, Input, Button, Row, Col, message} from 'antd';
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 
 function Signin() {
 
-    const {history} = useReactRouter();
+    const {history} = useReactRouter()
+    const [adminLogin, setAdminLogin] = useState(false)
 
     useEffect(() => {
         if (sessionStorage.getItem('name') != null) history.push("/item");
@@ -25,17 +26,28 @@ function Signin() {
             .then(function (response: any) {
                 if (response.data !== null && response.data.token !== "") {
 
-                    const token = response.data.token
-                    const name = response.data.name
+                    const { token, name, admin } = response.data
 
                     sessionStorage.setItem('token', token)
                     sessionStorage.setItem('name', name)
-                    history.push("/item")
+                    sessionStorage.setItem('admin', admin)
+
+                    if(adminLogin){
+                        if(admin) {
+                            history.push("/admin")
+                        }
+                        else{
+                            message.error('관리자가 아닙니다.');
+                        }
+                    }
+                    else{
+                        history.push("/item")
+                    }
                 }
             })
 
             .catch(function (error) {
-                console.log(error)
+                message.error('로그인에 실패했습니다.');
             })
     }
 
@@ -58,9 +70,9 @@ function Signin() {
                         <Row>
                             <Col span={18} offset={3}>
                                 <Form.Item
-                                    name="email"
-                                >
-                                    <Input prefix={<UserOutlined className="site-form-item-icon" placeholder="이메일" />}/>
+                                    name="email">
+                                    <Input prefix={<UserOutlined className="site-form-item-icon"/>}
+                                           placeholder="이메일"/>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -76,7 +88,6 @@ function Signin() {
                                 </Form.Item>
                             </Col>
                         </Row>
-
                         <Row>
                             <Col span={8} offset={3}>
                                 <Form.Item>
@@ -87,7 +98,16 @@ function Signin() {
                             </Col>
                             <Col span={8} offset={2}>
                                 <Form.Item>
-                                    <Button onClick={()=>history.push("/signup")} type="primary">
+                                    <Button onClick={()=>setAdminLogin(true)} type="primary" htmlType="submit">
+                                        관리자 로그인
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={18} offset={3}>
+                                <Form.Item>
+                                    <Button onClick={()=>history.push("/signup")} type="default">
                                         회원가입
                                     </Button>
                                 </Form.Item>

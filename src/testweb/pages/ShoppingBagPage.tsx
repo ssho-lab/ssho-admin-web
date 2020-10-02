@@ -10,7 +10,7 @@ import {Row, Col, Button} from "antd";
 import useReactRouter from 'use-react-router';
 import {HeartOutlined} from "@ant-design/icons/lib";
 
-function ItemLikePage() {
+function ShoppingBagPage() {
 
     const {history} = useReactRouter();
 
@@ -143,4 +143,4 @@ function ItemLikePage() {
     );
 }
 
-export default ItemLikePage;
+export default ShoppingBagPage;

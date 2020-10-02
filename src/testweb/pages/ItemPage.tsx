@@ -188,7 +188,7 @@ function ItemPage() {
                 </Col>
                 <Col offset={2} span={4}>
                     <Button onClick={() => {
-                        history.push("/item/like");
+                        history.push("/item/shopping-bag");
                     }} style={{height: "50px", color: "black", fontSize: "12px"}}>좋아요 한 상품 보기</Button>
                 </Col>
                 <Col offset={2} span={4}>
