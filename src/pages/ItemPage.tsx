@@ -16,24 +16,26 @@ import moment from 'moment'
 function ItemPage() {
     const [initial, setInitial]: any = useState(true);
     const [productList, setProductList]: any[] = useState([]);
-    const [swipeReq, setSwipeReq]: any = useState({startTime : null, swipeList : []});
-    const [userId, setUserId]: any = useState<string>();
+    const [swipeReq, setSwipeReq]: any = useState({startTime: null, swipeList: []});
+    const [token, setToken]: any = useState<string>();
 
     const [numOfSets, setNumOfSets]: any = useState<number>();
     const [numOfLikes, setNumOfLikes]: any = useState<number>();
 
-    const { history} = useReactRouter();
+    const {history} = useReactRouter();
 
     useEffect(() => {
 
-        if(sessionStorage.getItem('id') == null) history.push("/");
+        if (sessionStorage.getItem('token') == null) {
+            history.push("/")
+        }
 
-        if(sessionStorage.getItem(('id')) !== null)
-            setUserId(sessionStorage.getItem('id'));
+        if (sessionStorage.getItem(('token')) !== null) {
+            setToken(sessionStorage.getItem('token'));
+        }
 
-        getAllProducts(sessionStorage.getItem("id"));
-        getNumOfSetsAndNumOfLikes(sessionStorage.getItem("id"));
-
+        getAllProducts(sessionStorage.getItem("token"));
+        getNumOfSetsAndNumOfLikes(sessionStorage.getItem("token"));
         resetTime();
 
     }, []);
@@ -58,16 +60,20 @@ function ItemPage() {
         setSwipeReq(temp);
     }
 
-    const resetSwipeReq = ()=> {
-        setSwipeReq({startTime : null, swipeList : []})
+    const resetSwipeReq = () => {
+        setSwipeReq({startTime: null, swipeList: []})
     }
 
-    const getAllProducts = (userId : any) => {
-        axios.get('http://13.124.59.2:8081/item/test?userId=' + userId)
+    const getAllProducts = (token: any) => {
+        axios.get('http://3.35.129.79:8080/cache/user-item', {
+            headers: {
+                Authorization: token
+            }
+        })
 
             .then(function (response: any) {
-                setProductList(response.data);
-                getNumOfSetsAndNumOfLikes(sessionStorage.getItem("id"));
+                setProductList(response.data.itemList);
+                getNumOfSetsAndNumOfLikes(sessionStorage.getItem("token"))
             })
 
             .catch(function (error) {
@@ -75,15 +81,18 @@ function ItemPage() {
             });
     }
 
-    const getNumOfSetsAndNumOfLikes = (userId : any) => {
-        axios.get('http://13.124.59.2:8081/item/test/like?userId=' + userId)
-
+    const getNumOfSetsAndNumOfLikes = (token: any) => {
+        axios.get('http://13.124.59.2:8081/item/shopping-bag', {
+            headers: {
+                Authorization: token
+            }
+        })
             .then(function (response: any) {
                 setNumOfSets(response.data.length);
 
                 let likeSum = 0;
 
-                response.data.forEach((set:any)=>{
+                response.data.forEach((set: any) => {
                     likeSum += set.length;
                 })
 
@@ -95,42 +104,46 @@ function ItemPage() {
             });
     }
 
-    const saveLogs = () => {
+    const saveLogs = (token: any) => {
 
-        const temp  = swipeReq;
+        const temp = swipeReq;
         const swipeList = temp.swipeList;
 
-        productList.forEach((p : any, key: number) => {
+        productList.forEach((p: any, key: number) => {
 
             const swipe =
 
                 {
-                    userId : "",
-                    itemId : "",
-                    score : 0,
+                    itemId: "",
+                    score: 0,
                     cardSeq: 0,
-                    swipeTime: null
+                    swipeTime: null,
+                    realTagList: [],
+                    expTagList: []
                 }
 
-                swipe.userId = userId;
-                swipe.itemId = p.id;
-                swipe.score = p.like ? 1 : 0
-                swipe.cardSeq = key;
-                swipe.swipeTime = swipeReq.startTime;
+            swipe.itemId = p.id;
+            swipe.score = p.like ? 1 : 0
+            swipe.cardSeq = key;
+            swipe.swipeTime = swipeReq.startTime;
+            swipe.realTagList = p.realTagList;
+            swipe.expTagList = p.expTagList;
 
-                swipeList.push(swipe);
+            swipeList.push(swipe);
         })
 
         temp.swipeList = swipeList;
         setSwipeReq(temp);
 
-        axios.post('http://13.124.59.2:8082/log/swipe', swipeReq)
-        //axios.post('http://localhost:8082/log/swipe', swipeReq)
-
+        axios.post('http://13.124.59.2:8082/log/swipe', swipeReq, {
+            headers: {
+                Authorization: token
+            }
+        })
             .then(function (response: any) {
                 setProductList([]);
-                getNumOfSetsAndNumOfLikes(sessionStorage.getItem("id"));
-                getAllProducts(userId);
+                getNumOfSetsAndNumOfLikes(sessionStorage.getItem("token"));
+                getAllProducts(sessionStorage.getItem("token"));
                 resetSwipeReq();
                 resetTime();
             })
@@ -158,24 +171,31 @@ function ItemPage() {
                 <Col offset={2}><h1>스쇼 테스트 페이지</h1></Col>
             </Row>
             <Row>
-                {sessionStorage.getItem('name') && <Col offset={2}><h4>{sessionStorage.getItem('name')}님 안녕하세요</h4></Col>}
+                {sessionStorage.getItem('name') &&
+                <Col offset={2}><h4>{sessionStorage.getItem('name')}님 안녕하세요</h4></Col>}
             </Row>
             <Row>
-                {numOfSets > 0 && <Col offset={2}><h4>진행한 세트 수 : {numOfSets}개</h4></Col>}
+                <Col offset={2}><h4>진행한 세트 수 : {numOfSets}개</h4></Col>
             </Row>
             <Row>
-                {numOfLikes > 0 && <Col offset={2}><h4>좋아요한 상품 수 : {numOfLikes}개</h4></Col>}
+                <Col offset={2}><h4>좋아요한 상품 수 : {numOfLikes}개</h4></Col>
             </Row>
-            <Row>
-                <Col offset={7} span={4}>
-                    <Button onClick={()=>{
-                        saveLogs()
-                    }}style={{height : "50px", color : "black", fontSize : "12px"}}>다음</Button>
+            <Row style={{marginTop: "50px"}}>
+                <Col offset={4} span={4}>
+                    <Button onClick={() => {
+                        saveLogs(sessionStorage.getItem('token'))
+                    }} style={{height: "50px", color: "black", fontSize: "12px"}}>다음</Button>
                 </Col>
                 <Col offset={2} span={4}>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         history.push("/item/like");
-                    }}style={{height : "50px", color : "black", fontSize : "12px"}}>좋아요 한 상품 보기</Button>
+                    }} style={{height: "50px", color: "black", fontSize: "12px"}}>좋아요 한 상품 보기</Button>
+                </Col>
+                <Col offset={2} span={4}>
+                    <Button onClick={() => {
+                        sessionStorage.clear()
+                        history.push("/")
+                    }} style={{height: "50px", color: "black", fontSize: "12px"}}>로그아웃</Button>
                 </Col>
             </Row>
 
@@ -200,7 +220,7 @@ function ItemPage() {
                         <div style={{textAlign: "right"}}>
                             <HeartOutlined
                                 onClick={(e: any) => {
-                                    if(p.like === true) e.target.style.color = 'black'
+                                    if (p.like === true) e.target.style.color = 'black'
                                     else e.target.style.color = 'red';
                                     setLike(p.id);
                                 }} style={{
@@ -216,7 +236,7 @@ function ItemPage() {
                                      src={p.imageUrl}></img>
                             </Col>
                         </Row>
-                        <div style={{marginTop : "20px"}}>
+                        <div style={{marginTop: "20px"}}>
                             <Row>
                                 <Col offset={0} span={24}>
                                     <h4 style={{fontSize: "12px"}}>{p.title}</h4>

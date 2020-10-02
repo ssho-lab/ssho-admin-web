@@ -15,13 +15,16 @@ function ItemLikePage() {
     const {history} = useReactRouter();
 
     const [likeItemList, setLikeItemList]: any[] = useState([]);
-    const [userId, setUserId]: any = useState<string>();
+    const [token, setToken]: any = useState<string>();
     const [setClicked, setSetClicked]: any = useState(false);
     const [clickedSetId, setClickedSetId]: any = useState(0);
 
-    const getLikeItems = (userId: any) => {
-        axios.get('http://13.124.59.2:8081/item/test/like?userId=' + userId)
-        //axios.get('http://localhost:8081/item/test/like?userId=' + userId)
+    const getLikeItems = (token: any) => {
+        axios.get('http://13.124.59.2:8081/item/shopping-bag', {
+            headers: {
+                Authorization: token
+            }
+        })
             .then(function (response: any) {
                 console.log(response.data);
                 setLikeItemList(response.data);
@@ -34,12 +37,12 @@ function ItemLikePage() {
 
     useEffect(() => {
 
-        if (sessionStorage.getItem('id') == null) history.push("/");
+        if (sessionStorage.getItem('token') == null) history.push("/");
 
-        if (sessionStorage.getItem(('id')) !== null)
-            setUserId(sessionStorage.getItem('id'));
+        if (sessionStorage.getItem(('token')) !== null)
+            setToken(sessionStorage.getItem('token'));
 
-        getLikeItems(sessionStorage.getItem("id"));
+        getLikeItems(sessionStorage.getItem("token"));
 
     }, []);
 
@@ -96,7 +99,7 @@ function ItemLikePage() {
                     }} span={4}>
                         <Row>
                             <Col offset={0} span={24}>
-                                <img style={{border: "none", borderRadius: "10px", cursor:"pointer"}}
+                                <img style={{border: "none", borderRadius: "10px", cursor: "pointer"}}
                                      src={likeItem[0].imageUrl}></img>
                             </Col>
                         </Row>
