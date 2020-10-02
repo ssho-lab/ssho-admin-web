@@ -10,14 +10,15 @@ import {LockOutlined, UserOutlined} from "@ant-design/icons";
 function Signin() {
 
     const {history} = useReactRouter()
-    const [adminLogin, setAdminLogin] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     useEffect(() => {
         if (sessionStorage.getItem('name') != null) history.push("/item");
 
     }, []);
 
-    const signin = (email: string, password: string) => {
+    const signin = (email: string, password: string, adminLogin: boolean) => {
 
         axios.post('http://3.35.129.79:8080/users/signin', {
             email: email,
@@ -51,10 +52,8 @@ function Signin() {
             })
     }
 
-    const onFinish = (values: any) => {
-        const email = values.email;
-        const password = values.password;
-        signin(email, password);
+    const onFinish = (email: string, password: string, adminLogin: boolean) => {
+        signin(email, password, adminLogin);
     };
 
 
@@ -63,7 +62,6 @@ function Signin() {
             <Row>
                 <Col span={8} offset={8}>
                     <Form
-                        onFinish={onFinish}
                         name="basic"
                         initialValues={{remember: true}}
                     >
@@ -71,7 +69,7 @@ function Signin() {
                             <Col span={18} offset={3}>
                                 <Form.Item
                                     name="email">
-                                    <Input prefix={<UserOutlined className="site-form-item-icon"/>}
+                                    <Input onChange={(e)=>setEmail(e.target.value)} prefix={<UserOutlined className="site-form-item-icon"/>}
                                            placeholder="이메일"/>
                                 </Form.Item>
                             </Col>
@@ -80,9 +78,8 @@ function Signin() {
                         <Row>
                             <Col span={18} offset={3}>
                                 <Form.Item
-                                    name="password"
-                                >
-                                    <Input prefix={<LockOutlined className="site-form-item-icon" />}
+                                    name="password">
+                                    <Input onChange={(e)=>setPassword(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}
                                            type="password"
                                            placeholder="비밀번호"/>
                                 </Form.Item>
@@ -91,14 +88,14 @@ function Signin() {
                         <Row>
                             <Col span={8} offset={3}>
                                 <Form.Item>
-                                    <Button type="primary" htmlType="submit">
+                                    <Button onClick={()=>onFinish(email, password, false)} type="primary">
                                         로그인
                                     </Button>
                                 </Form.Item>
                             </Col>
                             <Col span={8} offset={2}>
                                 <Form.Item>
-                                    <Button onClick={()=>setAdminLogin(true)} type="primary" htmlType="submit">
+                                    <Button onClick={()=>onFinish(email, password, true)} type="primary">
                                         관리자 로그인
                                     </Button>
                                 </Form.Item>
