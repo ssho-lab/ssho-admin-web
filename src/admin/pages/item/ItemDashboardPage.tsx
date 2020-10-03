@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Button, Layout, Menu, message, Table} from "antd";
+import {Button, Layout, Table} from "antd";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 interface ItemDashboardPageProps {

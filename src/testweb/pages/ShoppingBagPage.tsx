@@ -6,11 +6,12 @@ import {GridLayout} from "@egjs/react-infinitegrid";
 import axios from 'axios';
 
 // @ts-ignore
-import {Row, Col, Button} from "antd";
+import {Button, Col, Row} from "antd";
 import useReactRouter from 'use-react-router';
-import {HeartOutlined} from "@ant-design/icons/lib";
 
-function ShoppingBagPage() {
+interface ShoppingBagPageProps {}
+
+const ShoppingBagPage: React.FC<ShoppingBagPageProps> = () => {
 
     const {history} = useReactRouter();
 
@@ -100,7 +101,7 @@ function ShoppingBagPage() {
                         <Row>
                             <Col offset={0} span={24}>
                                 <img style={{border: "none", borderRadius: "10px", cursor: "pointer"}}
-                                     src={likeItem[0].imageUrl}></img>
+                                     src={likeItem[0].imageUrl}/>
                             </Col>
                         </Row>
                         <Row>
@@ -116,7 +117,7 @@ function ShoppingBagPage() {
                         <Row>
                             <Col offset={0} span={24}>
                                 <img style={{border: "none", borderRadius: "10px"}}
-                                     src={likeItem.imageUrl}></img>
+                                     src={likeItem.imageUrl}/>
                             </Col>
                         </Row>
                         <div style={{marginTop: "20px"}}>

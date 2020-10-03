@@ -7,7 +7,9 @@ import axios from 'axios';
 import {Form, Input, Button, Row, Col, message} from 'antd';
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 
-function Signin() {
+interface SigninPageProps {}
+
+const SigninPage: React.FC<SigninPageProps> = () => {
 
     const {history} = useReactRouter()
     const [email, setEmail] = useState("")
@@ -118,4 +120,4 @@ function Signin() {
     );
 }
 
-export default Signin;
+export default SigninPage;

@@ -6,11 +6,11 @@ import axios from 'axios';
 // @ts-ignore
 import {Button, Col, Form, Input, message, Row,} from 'antd';
 
-function Signup() {
+interface SignupPageProps {}
+
+const SignupPage: React.FC<SignupPageProps> = () => {
 
     const [form] = Form.useForm();
-    const [emailRegistered, setEmailRegistered] = useState(false)
-    const [email, setEmail] = useState("")
 
     const {history} = useReactRouter()
 
@@ -171,4 +171,4 @@ function Signup() {
     );
 }
 
-export default Signup;
+export default SignupPage;
