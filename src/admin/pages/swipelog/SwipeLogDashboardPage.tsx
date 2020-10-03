@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Layout, Menu, message, Table} from "antd";
+import {Layout, Table} from "antd";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 interface SwipeLogDashboardPageProps {
@@ -13,11 +14,13 @@ const SwipeLogDashboardPage: React.FC<SwipeLogDashboardPageProps> = ({dataSource
             title: '회원 고유 번호',
             dataIndex: 'userId',
             width: 150,
+            render: (userId: string) => <span>#{userId}</span>
         },
         {
             title: '상품 고유 번호',
             dataIndex: 'itemId',
             width: 150,
+            render: (itemId: string) => <span>#{itemId}</span>
         },
         {
             title: '스와이프 일시',
@@ -42,7 +45,7 @@ const SwipeLogDashboardPage: React.FC<SwipeLogDashboardPageProps> = ({dataSource
     ];
 
     return (
-        <Table columns={columns} dataSource={dataSource} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+        <Table columns={columns} dataSource={dataSource} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
     )
 }
 
