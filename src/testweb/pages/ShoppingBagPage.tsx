@@ -21,7 +21,7 @@ const ShoppingBagPage: React.FC<ShoppingBagPageProps> = () => {
     const [clickedSetId, setClickedSetId]: any = useState(0);
 
     const getLikeItems = (token: any) => {
-        axios.get('http://13.124.59.2:8081/item/shopping-bag', {
+        axios.get('http://54.180.137.46:8081/item/shopping-bag', {
             headers: {
                 Authorization: token
             }
@@ -90,7 +90,6 @@ const ShoppingBagPage: React.FC<ShoppingBagPageProps> = () => {
                     margin: 5,
                     align: "center",
                 }}>
-
 
                 {!setClicked && likeItemList.length > 0 && likeItemList.map((likeItem: any, key: any) =>
 

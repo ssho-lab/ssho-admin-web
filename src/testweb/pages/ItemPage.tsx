@@ -12,7 +12,7 @@ import {Button, Col, Row} from "antd";
 import useReactRouter from 'use-react-router';
 
 import moment from 'moment'
-import {ClipLoader, RotateLoader} from "react-spinners";
+import {RotateLoader} from "react-spinners";
 
 interface ItemPageProps {
 }
@@ -49,11 +49,14 @@ const ItemPage: React.FC<ItemPageProps> = () => {
 
     }, [])
 
+    /*
     useEffect(() => {
-        if (swipeReq.swipeList.length === 0) {
+        if (swipeReq.swipeList.length === 0 && swipeReq.startTime !== null) {
             getAllItemList(sessionStorage.getItem("token"))
         }
-    }, [swipeReq])
+    }, [swipeReq.swipeList, swipeReq.startTime])
+
+     */
 
 
     /*
@@ -94,7 +97,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
     }
 
     const getNumOfSetsAndNumOfLikes = (token: any) => {
-        axios.get('http://13.124.59.2:8081/item/shopping-bag', {
+        axios.get('http://54.180.137.46:8081/item/shopping-bag', {
             headers: {
                 Authorization: token
             }
@@ -158,7 +161,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
         temp.swipeList = swipeList;
         setSwipeReq(temp);
 
-        axios.post('http://13.124.59.2:8082/log/swipe', swipeReq, {
+        axios.post('http://54.180.137.46:8082/log/swipe', swipeReq, {
             headers: {
                 Authorization: token
             }
@@ -167,6 +170,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
                 updateNumOfLikesAndSets(swipeList)
                 setItemList([])
                 resetSwipeReq()
+                getAllItemList(sessionStorage.getItem("token"))
             })
 
             .catch(function (error) {
@@ -183,6 +187,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
                 item.like = !item.like;
             }
         });
+
         setItemList(temp);
     }
 
@@ -255,12 +260,12 @@ const ItemPage: React.FC<ItemPageProps> = () => {
                         margin: 5,
                         align: "center",
                     }}>
-                    {itemList && itemList.length > 0 && itemList.map((p: any, key: any) =>
+                    {itemList.length > 0 && itemList.map((p: any, key: any) =>
                         <Col key={key} style={{cursor: "pointer", marginTop: "5vh"}} span={4}>
                             <div style={{textAlign: "right"}}>
                                 <HeartOutlined
                                     onClick={(e: any) => {
-                                        if (p.like) e.target.style.color = 'black'
+                                        if (p.like === true) e.target.style.color = 'black'
                                         else e.target.style.color = 'red';
                                         setLike(p.id);
                                     }} style={{
@@ -272,7 +277,8 @@ const ItemPage: React.FC<ItemPageProps> = () => {
                             </div>
                             <Row>
                                 <Col offset={0} span={24}>
-                                    <img style={{border: "none", borderRadius: "10px"}} src={p.imageUrl}/>
+                                    <img style={{border: "none", borderRadius: "10px"}}
+                                         src={p.imageUrl}/>
                                 </Col>
                             </Row>
                             <div style={{marginTop: "20px"}}>
@@ -292,7 +298,6 @@ const ItemPage: React.FC<ItemPageProps> = () => {
                                     </Col>
                                 </Row>
                             </div>
-
                         </Col>
                     )}
 

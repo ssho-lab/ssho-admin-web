@@ -7,6 +7,7 @@ import ItemDashboardPage from "./item/ItemDashboardPage";
 import SwipeLogDashboardPage from "./swipelog/SwipeLogDashboardPage";
 import useReactRouter from "use-react-router";
 import UserDashboardPage from "./user/UserDashboardPage";
+import SubMenu from "antd/es/menu/SubMenu";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -23,7 +24,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
 
     const getItemList = () => {
 
-        axios.get('http://13.124.59.2:8081/item')
+        axios.get('http://54.180.137.46:8081/item')
             .then(function (response: any) {
                 setItemList(response.data)
             })
@@ -33,7 +34,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     }
 
     const getSwipeLogList = () => {
-        axios.get('http://13.124.59.2:8082/log/swipe')
+        axios.get('http://54.180.137.46:8082/log/swipe')
             .then(function (response: any) {
                 setSwipeLogList(response.data)
             })
@@ -79,19 +80,19 @@ const AdminPage: React.FC<AdminPageProps> = () => {
                     <Menu.Item onClick={()=>setMenuId(0)} key="0" icon={<UserOutlined />}>
                         등록 상품
                     </Menu.Item>
-                    <Menu.Item onClick={()=>setMenuId(1)} key="1" icon={<UserOutlined />}>
-                        스와이프 로그
-                    </Menu.Item>
-                    <Menu.Item onClick={()=>setMenuId(2)} key="2" icon={<UserOutlined />}>
+                    <SubMenu key="1" icon={<UserOutlined />} title="스와이프 로그">
+                        <Menu.Item onClick={()=>setMenuId(1)} key="2">스와이프 로그 조회</Menu.Item>
+                    </SubMenu>
+                    <Menu.Item onClick={()=>setMenuId(2)} key="6" icon={<UserOutlined />}>
                         회원
                     </Menu.Item>
-                    <Menu.Item onClick={()=>history.push("/item")} key="3" icon={<UserOutlined />}>
+                    <Menu.Item onClick={()=>history.push("/item")} key="7" icon={<UserOutlined />}>
                         테스트 페이지
                     </Menu.Item>
                     <Menu.Item onClick={()=>{
                         sessionStorage.clear()
                         history.push("/")
-                    }} key="3" icon={<UserOutlined />}>
+                    }} key="8" icon={<UserOutlined />}>
                         로그아웃
                     </Menu.Item>
                 </Menu>
