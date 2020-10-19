@@ -8,6 +8,7 @@ import SwipeLogDashboardPage from "./swipelog/SwipeLogDashboardPage";
 import useReactRouter from "use-react-router";
 import UserDashboardPage from "./user/UserDashboardPage";
 import SubMenu from "antd/es/menu/SubMenu";
+import API_ENDPOINTS from '../../endpoints';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -24,7 +25,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
 
     const getItemList = () => {
 
-        axios.get('http://54.180.137.46:8081/item')
+        axios.get(API_ENDPOINTS.ITEM_API + "/item")
             .then(function (response: any) {
                 setItemList(response.data)
             })
@@ -34,7 +35,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     }
 
     const getSwipeLogList = () => {
-        axios.get('http://54.180.137.46:8082/log/swipe')
+        axios.get(API_ENDPOINTS.LOG_API + '/log/swipe')
             .then(function (response: any) {
                 setSwipeLogList(response.data)
             })

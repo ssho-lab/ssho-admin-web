@@ -13,6 +13,7 @@ import useReactRouter from 'use-react-router';
 
 import moment from 'moment'
 import {RotateLoader} from "react-spinners";
+import API_ENDPOINTS from "../../endpoints";
 
 interface ItemPageProps {
 }
@@ -97,7 +98,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
     }
 
     const getNumOfSetsAndNumOfLikes = (token: any) => {
-        axios.get('http://54.180.137.46:8081/item/shopping-bag', {
+        axios.get(API_ENDPOINTS.ITEM_API + 'item/shopping-bag', {
             headers: {
                 Authorization: token
             }
@@ -161,7 +162,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
         temp.swipeList = swipeList;
         setSwipeReq(temp);
 
-        axios.post('http://54.180.137.46:8082/log/swipe', swipeReq, {
+        axios.post(API_ENDPOINTS.LOG_API + '/log/swipe', swipeReq, {
             headers: {
                 Authorization: token
             }

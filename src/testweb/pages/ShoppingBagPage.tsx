@@ -8,6 +8,7 @@ import axios from 'axios';
 // @ts-ignore
 import {Button, Col, Row} from "antd";
 import useReactRouter from 'use-react-router';
+import API_ENDPOINTS from "../../endpoints";
 
 interface ShoppingBagPageProps {}
 
@@ -21,7 +22,7 @@ const ShoppingBagPage: React.FC<ShoppingBagPageProps> = () => {
     const [clickedSetId, setClickedSetId]: any = useState(0);
 
     const getLikeItems = (token: any) => {
-        axios.get('http://54.180.137.46:8081/item/shopping-bag', {
+        axios.get(API_ENDPOINTS.ITEM_API + '/item/shopping-bag', {
             headers: {
                 Authorization: token
             }
