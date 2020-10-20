@@ -10,7 +10,7 @@ import UserDashboardPage from "./user/UserDashboardPage";
 import SubMenu from "antd/es/menu/SubMenu";
 import API_ENDPOINTS from '../../endpoints';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 interface AdminPageProps {}
 
@@ -20,6 +20,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     const [ itemList, setItemList ] = useState<any>([])
     const [ swipeLogList, setSwipeLogList ] = useState<any>([])
     const [ userList, setUserList ] = useState<any>([])
+    const [ allTagList, setAllTagList] = useState<any>([])
 
     const {history} = useReactRouter()
 
@@ -54,6 +55,16 @@ const AdminPage: React.FC<AdminPageProps> = () => {
             })
     }
 
+    const getAllTagList = () => {
+        axios.get('http://3.35.129.79:8080'+'/tag')
+            .then(function(response: any){
+                setAllTagList(response.data)
+            })
+
+            .catch(function(err){
+            })
+    }
+
     useEffect(()=>{
         if (sessionStorage.getItem('token') === null ||
             sessionStorage.getItem('admin') === null ||
@@ -64,6 +75,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
         getItemList()
         getSwipeLogList()
         getUserList()
+        getAllTagList()
     },[])
 
     return (
@@ -102,7 +114,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
                 <Header className="site-layout-background" style={{ padding: 0 }} />
                 <Content style={{ margin: '24px 0 0', overflow: 'initial', height: "100vh"}}>
                     <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
-                        {menuId === 0 && itemList && <ItemDashboardPage dataSource={itemList}/>}
+                        {menuId === 0 && itemList && <ItemDashboardPage dataSource={itemList} allTagList={allTagList}/>}
                         {menuId === 1 && swipeLogList && <SwipeLogDashboardPage dataSource={swipeLogList}/>}
                         {menuId === 2 && userList && <UserDashboardPage dataSource={userList}/>}
                     </div>

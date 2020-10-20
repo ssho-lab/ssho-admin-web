@@ -1,14 +1,24 @@
 import * as React from 'react';
-import {Button, Layout, Table} from "antd";
-
-const { Header, Content, Footer, Sider } = Layout;
+import {Button, Table} from "antd";
+import TagList from './TagList';
 
 interface ItemDashboardPageProps {
-    dataSource: []
+    dataSource: [];
+    allTagList: [];
 }
 
-const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource}) => {
+interface Tag{
+  id: string;
+  name: string;
+  embedding?: null;
+}
 
+interface TagProps{
+  expTag: Tag;
+  realTagList: Tag[];
+}
+
+const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTagList}) => {
     const columns = [
         {
             title: '상품 고유 번호',
@@ -47,6 +57,12 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource}) => {
         {
             title: '상품명',
             dataIndex: 'title',
+            width: 150,
+        },
+        {
+            title: '태그 리스트',
+            dataIndex: 'tagList',
+            render: (tagList: TagProps[]) => <TagList tagListPerItem={tagList} allTagList={allTagList}/>,
         },
         {
             title: '가격',
