@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {Layout, Table} from "antd";
-
-const { Header, Content, Footer, Sider } = Layout;
+import {Table} from "antd";
 
 interface SwipeLogDashboardPageProps {
     dataSource: []

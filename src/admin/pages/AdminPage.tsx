@@ -56,7 +56,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     }
 
     const getAllTagList = () => {
-        axios.get('http://3.35.129.79:8080'+'/tag')
+        axios.get('http://3.35.129.79:8080/tag')
             .then(function(response: any){
                 setAllTagList(response.data)
             })

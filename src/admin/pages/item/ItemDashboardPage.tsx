@@ -84,7 +84,7 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
     ];
 
     return (
-        <Table columns={columns} dataSource={dataSource} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
+        <Table columns={columns} rowKey={record => record.id} dataSource={dataSource} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
     )
 }
 
