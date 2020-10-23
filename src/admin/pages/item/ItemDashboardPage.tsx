@@ -62,7 +62,7 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
         {
             title: '태그 리스트',
             dataIndex: 'tagList',
-            render: (tagList: TagProps[]) => <TagList tagListPerItem={tagList} allTagList={allTagList}/>,
+            render: (tagList: TagProps[], record: any) => <TagList itemId={record.id} tagListPerItem={tagList} allTagList={allTagList}/>,
         },
         {
             title: '가격',
