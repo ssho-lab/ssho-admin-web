@@ -72,9 +72,9 @@ const TagList = ({itemId, tagListPerItem, allTagList}: TagListProps) => {
   }
 
   return (
-    <div style={{display: 'flex'}}>
-      <Select mode="multiple" allowClear defaultValue={defaultTagList} style={{width: '80%'}}  placeholder="태그 리스트" onChange={handleSelectChange}>{options}</Select>
-      <Button type="primary" style={{width: '20%'}} disabled={!buttonClickable} onClick={handleClick}>태그 수정</Button>
+    <div>
+      <Select mode="multiple" allowClear defaultValue={defaultTagList} style={{width: '100%', fontSize: '10px'}}  placeholder="태그 리스트" onChange={handleSelectChange}>{options}</Select>
+      <Button style={{width: '100%', fontSize: '10px'}}  type="primary" disabled={!buttonClickable} onClick={handleClick}>태그 수정</Button>
     </div>
   );
 }

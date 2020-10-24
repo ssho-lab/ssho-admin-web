@@ -23,13 +23,13 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
         {
             title: '상품 고유 번호',
             dataIndex: 'id',
-            width: 150,
-            render: (id: string) => <span>#{id}</span>
+            width: 110,
+            render: (id: string) => <span style={{fontSize: "10px"}}>#{id}</span>
         },
         {
             title: '몰명',
             dataIndex: 'mallNm',
-            width: 150,
+            width: 80,
             filters: [
                 {
                     text: '스타일난다',
@@ -47,27 +47,33 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
                     text: '룩앳민',
                     value: '룩앳민',
                 }],
-            onFilter: (value: any, record: any) => record.mallNm.indexOf(value) === 0
+            onFilter: (value: any, record: any) => record.mallNm.indexOf(value) === 0,
+            render: (mallNm: string) => <span style={{fontSize: "10px"}}>#{mallNm}</span>
         },
         {
             title: '카테고리',
             dataIndex: 'category',
             width: 100,
+            render: (category: string) => <span style={{fontSize: "10px"}}>#{category}</span>
         },
         {
             title: '상품명',
             dataIndex: 'title',
-            width: 150,
+            width: 100,
+            render: (title: string) => <span style={{fontSize: "10px"}}>#{title}</span>
         },
         {
             title: '태그 리스트',
             dataIndex: 'tagList',
+            width: 250,
             render: (tagList: TagProps[], record: any) => <TagList itemId={record.id} tagListPerItem={tagList} allTagList={allTagList}/>,
         },
         {
             title: '가격',
             dataIndex: 'price',
             width: 100,
+            render: (price: string) => <span style={{fontSize: "10px"}}>{price}</span>
+
         },
         {
             title: '상품 이미지',
@@ -75,12 +81,15 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
             width: 150,
             render: (imageUrl: string) => <img style={{width: 100, height: "auto"}} src={imageUrl}></img>,
         },
+        /*
         {
             title: '상품 상세',
             dataIndex: 'link',
             width: 100,
             render: (link: string) => <a href={link} target="_blank"><Button>이동</Button></a>,
         },
+
+         */
     ];
 
     return (
