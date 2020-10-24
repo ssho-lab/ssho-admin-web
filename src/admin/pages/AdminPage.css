@@ -13,3 +13,7 @@
 .header {
     text-align: right;
 }
+
+.option-label-item{
+    margin-right: 6px;
+}

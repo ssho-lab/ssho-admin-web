@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Layout, Menu, message, Table} from "antd";
-const { Header, Content, Footer, Sider } = Layout;
+import {Table} from "antd";
 
 interface UserDashboardPageProps {
     dataSource: []

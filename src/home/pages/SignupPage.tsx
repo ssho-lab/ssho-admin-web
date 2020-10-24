@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import '../../App.css';
 import useReactRouter from 'use-react-router';
 import axios from 'axios';
