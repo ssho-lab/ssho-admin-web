@@ -36,7 +36,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     }
 
     const getSwipeLogList = () => {
-        axios.get(API_ENDPOINTS.LOG_API + '/log/swipe')
+        axios.get('https://3a3uqctsjk.execute-api.ap-northeast-2.amazonaws.com/dev/swipeSets')
             .then(function (response: any) {
                 setSwipeLogList(response.data)
             })
