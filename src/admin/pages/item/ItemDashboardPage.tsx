@@ -8,14 +8,15 @@ interface ItemDashboardPageProps {
 }
 
 interface Tag{
-  id: string;
-  name: string;
-  embedding?: null;
+    id: string;
+    name: string;
+    level: number;
+    parentTagId: string;
 }
-
-interface TagProps{
-  expTag: Tag;
-  realTagList: Tag[];
+  
+interface TagGroup{
+lvl1Tag: Tag;
+lvl2Tag: Tag[] | [];
 }
 
 const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTagList}) => {
@@ -66,7 +67,7 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
             title: '태그 리스트',
             dataIndex: 'tagList',
             width: 250,
-            render: (tagList: TagProps[], record: any) => <TagList itemId={record.id} tagListPerItem={tagList} allTagList={allTagList}/>,
+            render: (tagList: TagGroup[], record: any) => <TagList itemId={record.id} tagListPerItem={tagList} allTagList={allTagList}/>,
         },
         {
             title: '가격',
