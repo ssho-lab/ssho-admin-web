@@ -82,6 +82,13 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
             width: 150,
             render: (imageUrl: string) => <img style={{width: 100, height: "auto"}} src={imageUrl}></img>,
         },
+        {
+            title: '노출 횟수',
+            dataIndex: 'showCount',
+            width: 150,
+            render: (showCount: number) => <span style={{fontSize: '10px'}}>{showCount}</span>,
+            sorter: (a: any, b: any) => b.showCount-a.showCount,
+        },
         /*
         {
             title: '상품 상세',
