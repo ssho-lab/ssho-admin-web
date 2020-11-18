@@ -13,7 +13,7 @@ interface Tag{
     level: number;
     parentTagId: string;
 }
-  
+
 interface TagGroup{
 lvl1Tag: Tag;
 lvl2Tag: Tag[] | [];
@@ -67,7 +67,7 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
             title: '태그 리스트',
             dataIndex: 'tagList',
             width: 250,
-            render: (tagList: TagGroup[], record: any) => <TagList itemId={record.id} tagListPerItem={tagList} allTagList={allTagList}/>,
+            render: (tagList: Tag[], record: any) => <TagList itemId={record.id} tagListPerItem={tagList} allTagList={allTagList}/>,
         },
         {
             title: '가격',

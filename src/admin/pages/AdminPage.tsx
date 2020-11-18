@@ -8,7 +8,6 @@ import SwipeLogDashboardPage from "./swipelog/SwipeLogDashboardPage";
 import useReactRouter from "use-react-router";
 import UserDashboardPage from "./user/UserDashboardPage";
 import SubMenu from "antd/es/menu/SubMenu";
-import API_ENDPOINTS from '../../endpoints';
 
 const { Header, Content, Sider } = Layout;
 

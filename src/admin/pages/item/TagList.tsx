@@ -18,7 +18,7 @@ interface TagGroup{
 }
 
 interface TagListProps{
-  tagListPerItem: TagGroup[] | null;
+  tagListPerItem: Tag[] | null;
   allTagList: TagGroup[];
   itemId: string;
 }
@@ -32,7 +32,7 @@ const updateTag = (itemId: string, data: any) => {
 }
 
 const TagList = ({itemId, tagListPerItem, allTagList}: TagListProps) => {
-  let defaultTagList: any[] | undefined = tagListPerItem===null ? undefined : tagListPerItem.map(el => Object.values(el).flat().map(tag => tag.name))
+  let defaultTagList: any[] | undefined = tagListPerItem===null ? undefined : tagListPerItem.map(el => el.name)
 
   const options= allTagList.map(el => {
     return (
@@ -66,7 +66,14 @@ const TagList = ({itemId, tagListPerItem, allTagList}: TagListProps) => {
     let newTagList = allTagList.filter(el => level1TagList.includes(el.lvl1Tag.name));
     newTagList.forEach(el => el.lvl2Tag = el.lvl2Tag.filter(tag => level2TagList.includes(tag.name)));
 
-    updateTag(itemId, newTagList)
+    let res:any = []
+
+    newTagList.forEach(el => {
+      res.push(el.lvl1Tag)
+      el.lvl2Tag.forEach(e => res.push(e))
+    })
+
+    updateTag(itemId, res)
       .then(function (response: any) {
         message.success('태그 수정 완료');
         setButtonClickable(false);
@@ -74,7 +81,7 @@ const TagList = ({itemId, tagListPerItem, allTagList}: TagListProps) => {
       })
       .catch(function (err: any){
         message.error('태그 수정 실패');
-      })  
+      })
   }
 
   return (
