@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {Table} from "antd";
 
 interface SwipeLogDashboardPageProps {
@@ -36,13 +36,14 @@ const SwipeLogDashboardPage: React.FC<SwipeLogDashboardPageProps> = ({dataSource
 
 
 
+
     return (
         <Table columns={columns} 
             expandable={{expandedRowRender: record => <Table columns={setColumns} 
                 expandable={{expandedRowRender: record => <Table columns={cardColumns} 
-                    dataSource={record.cardList}/>}} 
-                dataSource={record.setList}/>}} 
-            dataSource={dataSource} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
+                    dataSource={record.cardList.map((data: any, idx: any) =>{return {...data, key: idx}})}/>}} 
+                dataSource={record.setList.map((data: any, idx: any) =>{return {...data, key: idx}})}/>}} 
+            dataSource={dataSource.map((data: any, idx: any) =>{return {...data, key: idx}})} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
     )
 }
 

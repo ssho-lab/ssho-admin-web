@@ -10,14 +10,8 @@ interface ItemDashboardPageProps {
 interface Tag{
     id: string;
     name: string;
-    level: number;
-    parentTagId: string;
 }
 
-interface TagGroup{
-lvl1Tag: Tag;
-lvl2Tag: Tag[] | [];
-}
 
 const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTagList}) => {
     const columns = [
