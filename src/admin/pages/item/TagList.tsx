@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Select, Button, message} from 'antd';
 import axios from 'axios';
-import API_ENDPOINTS from '../../../endpoints';
+import { API_ENDPOINTS } from '../../../endpoints';
 
 const {Option} = Select;
 
@@ -50,9 +50,9 @@ const TagList = ({itemId, tagListPerItem, allTagList}: TagListProps) => {
   }
 
   const handleClick = () => {
-    
+
     const data = allTagList.filter(tag => newTagList.includes(tag.name));
-    
+
     updateTag(itemId, data)
       .then(function (response: any) {
         message.success('태그 수정 완료');
