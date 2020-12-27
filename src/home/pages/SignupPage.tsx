@@ -1,27 +1,28 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import '../../App.css';
 import useReactRouter from 'use-react-router';
 import axios from 'axios';
+import API_ENDPOINTS from '../../endpoints';
 
 // @ts-ignore
-import {Button, Col, Form, Input, message, Row,} from 'antd';
+import { Button, Col, Form, Input, message, Row, } from 'antd';
 
-interface SignupPageProps {}
+interface SignupPageProps { }
 
 const SignupPage: React.FC<SignupPageProps> = () => {
 
     const [form] = Form.useForm();
 
-    const {history} = useReactRouter()
+    const { history } = useReactRouter()
 
     const formItemLayout = {
         labelCol: {
-            xs: {span: 24},
-            sm: {span: 8},
+            xs: { span: 24 },
+            sm: { span: 8 },
         },
         wrapperCol: {
-            xs: {span: 24},
-            sm: {span: 16},
+            xs: { span: 24 },
+            sm: { span: 16 },
         },
     };
     const tailFormItemLayout = {
@@ -48,13 +49,13 @@ const SignupPage: React.FC<SignupPageProps> = () => {
 
     const saveUser = (email: string, password: string, name: string) => {
 
-        axios.post('http://3.35.129.79:8080/users/signup', {
+        axios.post(API_ENDPOINTS.CORE_API + '/users/signup', {
             email: email,
             password: password,
             name: name
         })
             .then(function (response: any) {
-                if(response.status === 200) {
+                if (response.status === 200) {
                     success()
                     history.push("/")
                 }
@@ -66,12 +67,12 @@ const SignupPage: React.FC<SignupPageProps> = () => {
     }
 
     const onFinish = (values: any) => {
-        const {email, password, name} = values
+        const { email, password, name } = values
         saveUser(email, password, name)
     };
 
     return (
-        <div style={{padding: "150px 0 0 0"}}>
+        <div style={{ padding: "150px 0 0 0" }}>
             <Row>
                 <Col span={12} offset={5}>
                     <Form
@@ -99,10 +100,10 @@ const SignupPage: React.FC<SignupPageProps> = () => {
                                         return new Promise((resolve, reject) => {
                                             axios.get('http://3.35.129.79:8080/users/check?email=' + value)
                                                 .then(function (response: any) {
-                                                    if(response.data === true) {
+                                                    if (response.data === true) {
                                                         reject('이미 등록된 이메일입니다.');
                                                     }
-                                                    else{
+                                                    else {
                                                         resolve();
                                                     }
                                                 })
@@ -111,7 +112,7 @@ const SignupPage: React.FC<SignupPageProps> = () => {
                                 })
                             ]}
                         >
-                            <Input/>
+                            <Input />
                         </Form.Item>
 
                         <Form.Item
@@ -125,7 +126,7 @@ const SignupPage: React.FC<SignupPageProps> = () => {
                             ]}
                             hasFeedback
                         >
-                            <Input.Password/>
+                            <Input.Password />
                         </Form.Item>
 
                         <Form.Item
@@ -138,7 +139,7 @@ const SignupPage: React.FC<SignupPageProps> = () => {
                                     required: true,
                                     message: '비밀번호 확인을 입력해주세요.',
                                 },
-                                ({getFieldValue}) => ({
+                                ({ getFieldValue }) => ({
                                     validator(rule, value) {
                                         if (!value || getFieldValue('password') === value) {
                                             return Promise.resolve();
@@ -148,15 +149,15 @@ const SignupPage: React.FC<SignupPageProps> = () => {
                                 }),
                             ]}
                         >
-                            <Input.Password/>
+                            <Input.Password />
                         </Form.Item>
 
                         <Form.Item
                             name="name"
                             label="이름"
-                            rules={[{required: true, message: '이름을 입력해주세요.', whitespace: true}]}
+                            rules={[{ required: true, message: '이름을 입력해주세요.', whitespace: true }]}
                         >
-                            <Input/>
+                            <Input />
                         </Form.Item>
                         <Form.Item {...tailFormItemLayout}>
                             <Button type="primary" htmlType="submit">
