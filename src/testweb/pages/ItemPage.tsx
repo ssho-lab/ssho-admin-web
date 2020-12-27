@@ -20,7 +20,6 @@ interface ItemPageProps {
 
 const ItemPage: React.FC<ItemPageProps> = () => {
 
-    const [initial, setInitial]: any = useState(true);
     const [itemList, setItemList]: any[] = useState([]);
     const [swipeReq, setSwipeReq]: any = useState({ startTime: null, swipeList: [] });
     const [token, setToken]: any = useState<string>();
@@ -50,39 +49,13 @@ const ItemPage: React.FC<ItemPageProps> = () => {
 
     }, [])
 
-    /*
-    useEffect(() => {
-        if (swipeReq.swipeList.length === 0 && swipeReq.startTime !== null) {
-            getAllItemList(sessionStorage.getItem("token"))
-        }
-    }, [swipeReq.swipeList, swipeReq.startTime])
-
-     */
-
-
-    /*
-    useEffect(() => {
-
-        if (itemList.length > 0 && initial) {
-
-            const temp = itemList;
-            temp.forEach((t: any) => {
-                t.like = false
-            });
-
-            setItemList(temp);
-            setInitial(false);
-        }
-    }, [itemList])
-
-     */
-
     const resetSwipeReq = () => {
         setSwipeReq({ startTime: moment().format("YYYY-MM-DD HH:mm:ss"), swipeList: [] })
     }
 
     const getAllItemList = (token: any) => {
-        axios.get(API_ENDPOINTS.CORE_API + '/cache/user-item', {
+        console.log("log")
+        axios.get(API_ENDPOINTS.CORE_API + '/card-deck', {
             headers: {
                 Authorization: token
             }
@@ -98,21 +71,17 @@ const ItemPage: React.FC<ItemPageProps> = () => {
     }
 
     const getNumOfSetsAndNumOfLikes = (token: any) => {
-        axios.get(API_ENDPOINTS.ITEM_API + 'item/shopping-bag', {
+        axios.get(API_ENDPOINTS.CORE_API + '/shopping-bag', {
             headers: {
                 Authorization: token
             }
         })
             .then(function (response: any) {
-                setNumOfSets(response.data.length);
-
-                let likeSum = 0;
-
-                response.data.forEach((set: any) => {
-                    likeSum += set.length;
-                })
-
-                setNumOfLikes(likeSum);
+                const cardSetList = response.data;
+                setNumOfSets(cardSetList.length);
+                let sum = 0;
+                cardSetList.forEach((cardSet: []) => sum += cardSet.length);
+                setNumOfLikes(sum);
             })
 
             .catch(function (error) {
@@ -121,14 +90,15 @@ const ItemPage: React.FC<ItemPageProps> = () => {
     }
 
     const updateNumOfLikesAndSets = (swipeList: []) => {
-        let likeSum = 0
+        let likeSum = 0;
         swipeList.forEach((swipe: any) => {
             if (swipe.score === 1) {
-                likeSum += swipe.score
+                likeSum += swipe.score;
             }
         })
-        setNumOfLikes(numOfLikes + likeSum)
-        setNumOfSets(numOfSets + 1)
+
+        setNumOfLikes(numOfLikes + likeSum);
+        setNumOfSets(numOfSets + 1);
     }
 
     const saveLogs = (token: any) => {
