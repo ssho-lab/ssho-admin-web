@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../App.css';
 import useReactRouter from 'use-react-router';
 import axios from 'axios';
-
+import API_ENDPOINTS from '../../endpoints';
 // @ts-ignore
-import {Form, Input, Button, Row, Col, message} from 'antd';
-import {LockOutlined, UserOutlined} from "@ant-design/icons";
+import { Form, Input, Button, Row, Col, message } from 'antd';
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
-interface SigninPageProps {}
+interface SigninPageProps { }
 
 const SigninPage: React.FC<SigninPageProps> = () => {
 
-    const {history} = useReactRouter()
+    const { history } = useReactRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -22,7 +22,7 @@ const SigninPage: React.FC<SigninPageProps> = () => {
 
     const signin = (email: string, password: string, adminLogin: boolean) => {
 
-        axios.post('http://3.35.129.79:8080/users/signin', {
+        axios.post(API_ENDPOINTS.CORE_API + '/users/signin', {
             email: email,
             password: password
         })
@@ -35,15 +35,15 @@ const SigninPage: React.FC<SigninPageProps> = () => {
                     sessionStorage.setItem('name', name)
                     sessionStorage.setItem('admin', admin)
 
-                    if(adminLogin){
-                        if(admin) {
+                    if (adminLogin) {
+                        if (admin) {
                             history.push("/admin")
                         }
-                        else{
+                        else {
                             message.error('관리자가 아닙니다.');
                         }
                     }
-                    else{
+                    else {
                         history.push("/item")
                     }
                 }
@@ -60,19 +60,19 @@ const SigninPage: React.FC<SigninPageProps> = () => {
 
 
     return (
-        <div style={{height: "100vh", padding: "30vh 0 0 0"}}>
+        <div style={{ height: "100vh", padding: "30vh 0 0 0" }}>
             <Row>
                 <Col span={8} offset={8}>
                     <Form
                         name="basic"
-                        initialValues={{remember: true}}
+                        initialValues={{ remember: true }}
                     >
                         <Row>
                             <Col span={18} offset={3}>
                                 <Form.Item
                                     name="email">
-                                    <Input onChange={(e)=>setEmail(e.target.value)} prefix={<UserOutlined className="site-form-item-icon"/>}
-                                           placeholder="이메일"/>
+                                    <Input onChange={(e) => setEmail(e.target.value)} prefix={<UserOutlined className="site-form-item-icon" />}
+                                        placeholder="이메일" />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -81,23 +81,23 @@ const SigninPage: React.FC<SigninPageProps> = () => {
                             <Col span={18} offset={3}>
                                 <Form.Item
                                     name="password">
-                                    <Input onChange={(e)=>setPassword(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}
-                                           type="password"
-                                           placeholder="비밀번호"/>
+                                    <Input onChange={(e) => setPassword(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}
+                                        type="password"
+                                        placeholder="비밀번호" />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={8} offset={3}>
                                 <Form.Item>
-                                    <Button onClick={()=>onFinish(email, password, false)} type="primary">
+                                    <Button onClick={() => onFinish(email, password, false)} type="primary">
                                         로그인
                                     </Button>
                                 </Form.Item>
                             </Col>
                             <Col span={8} offset={2}>
                                 <Form.Item>
-                                    <Button onClick={()=>onFinish(email, password, true)} type="primary">
+                                    <Button onClick={() => onFinish(email, password, true)} type="primary">
                                         관리자 로그인
                                     </Button>
                                 </Form.Item>
@@ -106,7 +106,7 @@ const SigninPage: React.FC<SigninPageProps> = () => {
                         <Row>
                             <Col span={18} offset={3}>
                                 <Form.Item>
-                                    <Button onClick={()=>history.push("/signup")} type="default">
+                                    <Button onClick={() => history.push("/signup")} type="default">
                                         회원가입
                                     </Button>
                                 </Form.Item>
