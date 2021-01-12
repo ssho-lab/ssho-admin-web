@@ -43,19 +43,19 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
                     value: '룩앳민',
                 }],
             onFilter: (value: any, record: any) => record.mallNm.indexOf(value) === 0,
-            render: (mallNm: string) => <span style={{fontSize: "10px"}}>#{mallNm}</span>
+            render: (mallNm: string) => <span style={{fontSize: "10px"}}>{mallNm}</span>
         },
         {
             title: '카테고리',
             dataIndex: 'category',
             width: 100,
-            render: (category: string) => <span style={{fontSize: "10px"}}>#{category}</span>
+            render: (category: string) => <span style={{fontSize: "10px"}}>{category}</span>
         },
         {
             title: '상품명',
             dataIndex: 'title',
             width: 100,
-            render: (title: string) => <span style={{fontSize: "10px"}}>#{title}</span>
+            render: (title: string) => <span style={{fontSize: "10px"}}>{title}</span>
         },
         {
             title: '태그 리스트',
@@ -79,7 +79,7 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
         {
             title: '노출 횟수',
             dataIndex: 'showCount',
-            width: 150,
+            width: 100,
             render: (showCount: number) => <span style={{fontSize: '10px'}}>{showCount}</span>,
             sorter: (a: any, b: any) => b.showCount-a.showCount,
         },
