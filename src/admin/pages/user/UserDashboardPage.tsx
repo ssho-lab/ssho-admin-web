@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {Table} from "antd";
+import {User} from "../../model/user/UserModel";
 
 interface UserDashboardPageProps {
-    dataSource: []
+    userList: User[]
 }
 
-const UserDashboardPage: React.FC<UserDashboardPageProps> = ({dataSource}) => {
+const UserDashboardPage: React.FC<UserDashboardPageProps> = ({userList}) => {
 
     const columns = [
         {
@@ -33,7 +34,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({dataSource}) => {
     ];
 
     return (
-        <Table columns={columns} dataSource={dataSource} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
+        <Table columns={columns} dataSource={userList} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
     )
 }
 

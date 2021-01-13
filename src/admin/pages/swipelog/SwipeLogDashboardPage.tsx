@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import {Table} from "antd";
 
 interface SwipeLogDashboardPageProps {
-    dataSource: any
+    swipeLogList: any
 }
 
 
-const SwipeLogDashboardPage: React.FC<SwipeLogDashboardPageProps> = ({dataSource}) => {
-    
+const SwipeLogDashboardPage: React.FC<SwipeLogDashboardPageProps> = ({swipeLogList}) => {
+
     const cardColumns = [
         {title: '아이템 고유번호', dataIndex: 'itemId', key: 'itemId'},
         {title: '좋아요 여부', dataIndex: 'score', key: 'score', render: (score: number) => <span>{score===1 ? '좋아요' : '싫어요'}</span>}
@@ -16,7 +16,7 @@ const SwipeLogDashboardPage: React.FC<SwipeLogDashboardPageProps> = ({dataSource
     const setColumns = [
         {title: '카드셋 번호', dataIndex: 'setId', key: 'setId'},
         {title: '좋아요 비율', dataIndex: 'likeRatio', key: 'likeRatio'},
-        {title: '슈퍼라이크 비율', dataIndex: 'superLikeRatio', key: 'superLikeRatio'},            
+        {title: '슈퍼라이크 비율', dataIndex: 'superLikeRatio', key: 'superLikeRatio'},
     ]
 
     const columns = [
@@ -38,12 +38,12 @@ const SwipeLogDashboardPage: React.FC<SwipeLogDashboardPageProps> = ({dataSource
 
 
     return (
-        <Table columns={columns} 
-            expandable={{expandedRowRender: record => <Table columns={setColumns} 
-                expandable={{expandedRowRender: record => <Table columns={cardColumns} 
-                    dataSource={record.cardList.map((data: any, idx: any) =>{return {...data, key: idx}})}/>}} 
-                dataSource={record.setList.map((data: any, idx: any) =>{return {...data, key: idx}})}/>}} 
-            dataSource={dataSource.map((data: any, idx: any) =>{return {...data, key: idx}})} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
+        <Table columns={columns}
+            expandable={{expandedRowRender: record => <Table columns={setColumns}
+                expandable={{expandedRowRender: record => <Table columns={cardColumns}
+                    dataSource={record.cardList.map((data: any, idx: any) =>{return {...data, key: idx}})}/>}}
+                dataSource={record.setList.map((data: any, idx: any) =>{return {...data, key: idx}})}/>}}
+            dataSource={swipeLogList.map((data: any, idx: any) =>{return {...data, key: idx}})} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
     )
 }
 
