@@ -12,6 +12,11 @@ interface Tag{
     name: string;
 }
 
+interface Category{
+    mallCatNm: string;
+    catCd: string;
+}
+
 
 const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTagList}) => {
     const columns = [
@@ -49,7 +54,9 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({dataSource, allTag
             title: '카테고리',
             dataIndex: 'category',
             width: 100,
-            render: (category: string) => <span style={{fontSize: "10px"}}>{category}</span>
+            render: (categoryList: Category[]) => categoryList.map(category => {
+                return <div><span style={{fontSize: "10px"}}>{category.mallCatNm}</span></div>
+            })
         },
         {
             title: '상품명',
