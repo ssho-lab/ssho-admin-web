@@ -4,14 +4,15 @@ import { Layout, Menu } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import ItemDashboardPage from "./item/ItemDashboardPage";
+import MallDashboardPage from "./mall/MallDashboardPage";
 import SwipeLogDashboardPage from "./swipelog/SwipeLogDashboardPage";
 import useReactRouter from "use-react-router";
 import UserDashboardPage from "./user/UserDashboardPage";
 import SubMenu from "antd/es/menu/SubMenu";
 import API_ENDPOINTS from "../../endpoints";
-import {User} from "../model/user/UserModel";
-import {Tag} from "../model/tag/TagModel";
-import {Mall} from "../model/mall/MallModel";
+import { User } from "../model/user/UserModel";
+import { Tag } from "../model/tag/TagModel";
+import { Mall } from "../model/mall/MallModel";
 
 const { Header, Content, Sider } = Layout;
 
@@ -111,14 +112,14 @@ const AdminPage: React.FC<AdminPageProps> = () => {
                         <Menu.Item onClick={() => setMenuId(0)} key="0" icon={<UserOutlined />}>
                             전체 상품
                         </Menu.Item>
-                        <Menu.Item onClick={() => setMenuId(0)} key="1" icon={<UserOutlined />}>
+                        <Menu.Item onClick={() => setMenuId(1)} key="1" icon={<UserOutlined />}>
                             몰별 상품
                         </Menu.Item>
                     </SubMenu>
                     <SubMenu key="0" icon={<UserOutlined />} title="스와이프 로그">
-                        <Menu.Item onClick={() => setMenuId(1)} key="2">스와이프 로그 조회</Menu.Item>
+                        <Menu.Item onClick={() => setMenuId(2)} key="2">스와이프 로그 조회</Menu.Item>
                     </SubMenu>
-                    <Menu.Item onClick={() => setMenuId(2)} key="3" icon={<UserOutlined />}>
+                    <Menu.Item onClick={() => setMenuId(3)} key="3" icon={<UserOutlined />}>
                         회원
                     </Menu.Item>
                     <Menu.Item onClick={() => history.push("/item")} key="4" icon={<UserOutlined />}>
@@ -137,8 +138,9 @@ const AdminPage: React.FC<AdminPageProps> = () => {
                 <Content style={{ margin: '24px 0 0', overflow: 'initial', height: "100vh" }}>
                     <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
                         {menuId === 0 && itemList && <ItemDashboardPage itemList={itemList} allTagList={allTagList} mallList={mallList} />}
-                        {menuId === 1 && swipeLogList && <SwipeLogDashboardPage swipeLogList={swipeLogList} />}
-                        {menuId === 2 && userList && <UserDashboardPage userList={userList} />}
+                        {menuId === 1 && itemList && <MallDashboardPage itemList={itemList} allTagList={allTagList} mallList={mallList} />}
+                        {menuId === 2 && swipeLogList && <SwipeLogDashboardPage swipeLogList={swipeLogList} />}
+                        {menuId === 3 && userList && <UserDashboardPage userList={userList} />}
                     </div>
                 </Content>
             </Layout>
