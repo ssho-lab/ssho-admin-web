@@ -13,6 +13,7 @@ import API_ENDPOINTS from "../../endpoints";
 import { User } from "../model/user/UserModel";
 import { Tag } from "../model/tag/TagModel";
 import { Mall } from "../model/mall/MallModel";
+import UserCacheDashboardPage from "./user/UserCacheDashboardPage";
 
 const { Header, Content, Sider } = Layout;
 
@@ -116,13 +117,18 @@ const AdminPage: React.FC<AdminPageProps> = () => {
                             몰별 상품
                         </Menu.Item>
                     </SubMenu>
-                    <SubMenu key="0" icon={<UserOutlined />} title="스와이프 로그">
+                    <SubMenu key="1" icon={<UserOutlined />} title="스와이프 로그">
                         <Menu.Item onClick={() => setMenuId(2)} key="2">스와이프 로그 조회</Menu.Item>
                     </SubMenu>
-                    <Menu.Item onClick={() => setMenuId(3)} key="3" icon={<UserOutlined />}>
-                        회원
-                    </Menu.Item>
-                    <Menu.Item onClick={() => history.push("/item")} key="4" icon={<UserOutlined />}>
+                    <SubMenu key="2" icon={<UserOutlined />} title="회원">
+                        <Menu.Item onClick={() => setMenuId(3)} key="3" icon={<UserOutlined />}>
+                            회원
+                        </Menu.Item>
+                        <Menu.Item onClick={() => setMenuId(4)} key="4" icon={<UserOutlined />}>
+                            회원 추천 상품
+                        </Menu.Item>
+                    </SubMenu>
+                    <Menu.Item onClick={() => history.push("/item")} key="6" icon={<UserOutlined />}>
                         테스트 페이지
                     </Menu.Item>
                     <Menu.Item onClick={() => {
@@ -141,6 +147,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
                         {menuId === 1 && itemList && <MallDashboardPage itemList={itemList} allTagList={allTagList} mallList={mallList} />}
                         {menuId === 2 && swipeLogList && <SwipeLogDashboardPage swipeLogList={swipeLogList} />}
                         {menuId === 3 && userList && <UserDashboardPage userList={userList} />}
+                        {menuId === 4 && userList && <UserCacheDashboardPage userList={userList} />}
                     </div>
                 </Content>
             </Layout>
