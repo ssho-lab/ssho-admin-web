@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Table} from "antd";
+import {Button, Descriptions, Table} from "antd";
 import TagList from './TagList';
 import {Category} from "../../model/category/CategoryModel";
 import {Tag} from "../../model/tag/TagModel";
@@ -96,8 +96,31 @@ const ItemDashboardPage: React.FC<ItemDashboardPageProps> = ({itemList, allTagLi
         }
     ];
 
+    const countCategoryItem = (itemList: any[], targetCatCd: string) => {
+        return itemList.filter(item => {
+            const catCds = item.category.map((cat: Category) => cat.catCd);
+            return catCds.filter((catCd: string) => catCd === targetCatCd).length > 0;
+        }).length
+    }
+
     return (
-        <Table columns={columns} rowKey={record => record.id} dataSource={itemList} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
+        <div>
+            {itemList &&
+            <div style={{marginBottom: 40, border: '1px solid black'}} >
+                <Descriptions layout="vertical" bordered size="small" column={{ xxl: 5, xl: 5, lg: 5, md: 3, sm: 2, xs: 1 }}>
+                    <Descriptions.Item label="전체 상품 개수">{itemList.length}</Descriptions.Item>
+                    <Descriptions.Item label="TOP">{countCategoryItem(itemList, 'TOP')}</Descriptions.Item>
+                    <Descriptions.Item label="BOTTOM">{countCategoryItem(itemList, 'BOTTOM')}</Descriptions.Item>
+                    <Descriptions.Item label="SKIRT">{countCategoryItem(itemList, 'SKIRT')}</Descriptions.Item>
+                    <Descriptions.Item label="OUTER">{countCategoryItem(itemList, 'OUTER')}</Descriptions.Item>
+                    <Descriptions.Item label="DRESS">{countCategoryItem(itemList, 'DRESS')}</Descriptions.Item>
+                    <Descriptions.Item label="SHOES">{countCategoryItem(itemList, 'SHOES')}</Descriptions.Item>
+                    <Descriptions.Item label="HAT">{countCategoryItem(itemList, 'HAT')}</Descriptions.Item>
+                    <Descriptions.Item label="EXTRA">{countCategoryItem(itemList, 'EXTRA')}</Descriptions.Item>
+                </Descriptions>
+            </div>}
+            <Table columns={columns} rowKey={record => record.id} dataSource={itemList} pagination={{ pageSize: 50 }} scroll={{ y: 320 }} />
+        </div>
     )
 }
 
