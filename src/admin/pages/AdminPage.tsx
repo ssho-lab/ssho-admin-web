@@ -32,7 +32,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
 
     const getItemList = () => {
 
-        axios.get('https://3a3uqctsjk.execute-api.ap-northeast-2.amazonaws.com/dev/item')
+        axios.get(API_ENDPOINTS.CORE_API + '/item')
             .then(function (response: any) {
                 setItemList(response.data)
             })
