@@ -6,6 +6,7 @@ import axios from "axios";
 import API_ENDPOINTS from "../../../endpoints";
 import {UserCache} from "../../model/user/UserCacheModel";
 import {Mall} from "../../model/mall/MallModel";
+//import xlsx from 'xlsx';
 
 const {Option} = Select;
 interface UserCacheDashboardPageProps {
@@ -33,6 +34,14 @@ const UserCacheDashboardPage: React.FC<UserCacheDashboardPageProps> = ({ userLis
             width: 110,
             render: (rate: number) => <span style={{ fontSize: "15px" }}>{rate}</span>
         },
+        /*
+        {
+            title: '다운로드',
+            width: 110,
+            render: () => <Button onClick={() => download()}>다운로드</Button>
+        },
+
+         */
     ];
 
     const itemColumns = [
@@ -79,6 +88,21 @@ const UserCacheDashboardPage: React.FC<UserCacheDashboardPageProps> = ({ userLis
             .catch(function (err) {
             })
     }
+
+    /*
+    const download = () => {
+        if(userCache) {
+            const ws = xlsx.utils.json_to_sheet(userCache.userMallList);
+
+            const wb = xlsx.utils.book_new();
+
+            xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            xlsx.writeFile(wb, "Test.xlsx");
+        }
+    }
+
+     */
 
     useEffect(() => {
         if(userInfo && userInfo.id){

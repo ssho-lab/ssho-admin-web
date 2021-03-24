@@ -104,6 +104,7 @@ const SignupPage: React.FC<SignupPageProps> = () => {
                                                         reject('이미 등록된 이메일입니다.');
                                                     }
                                                     else {
+                                                        // @ts-ignore
                                                         resolve();
                                                     }
                                                 })
